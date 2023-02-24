@@ -14,8 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Welcome</h1>
-      <button>Click</button>
+      <h1>Hello form H1</h1>
     </div>
   )
 }
