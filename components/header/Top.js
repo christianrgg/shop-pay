@@ -1,11 +1,13 @@
-import Image from 'next/image';
 import styles from './styles.module.scss';
 import {MdSecurity} from 'react-icons/md';
 import {BsSuitHeart} from 'react-icons/bs';
 import {RiAccountPinCircleLine, RiArrowDropDownFill} from 'react-icons/ri';
 import Link from 'next/link';
+import { use, useState } from 'react';
+import UserMenu from './UserMenu';
 
 export default function Top() {
+  const[loggedIn, setLoggedIn] = useState(false)
   return (
     <div className={styles.top}>
         <div className={styles.top__container}>
@@ -32,11 +34,25 @@ export default function Top() {
                   </Link>
                 </li>
                 <li>
+                {
+                  loggedIn ? ( 
+                  <li>
+                  <div className={styles.flex}>
+                    <img src='https://res.cloudinary.com/ddfzagwob/image/upload/v1668309130/582cbc77150627b3263358f82be5b44f_f533p4.png' alt=""/>
+                    <span>Christian</span>
+                    <RiArrowDropDownFill/>
+                  </div>
+                </li> 
+                ) : (
+                  <li>
                   <div className={styles.flex}>
                     <RiAccountPinCircleLine/>
                     <span>Account</span>
                     <RiArrowDropDownFill/>
                   </div>
+                  </li> 
+                )}
+                <UserMenu loggedIn={loggedIn}/>
                 </li>
             </ul>
         </div>
