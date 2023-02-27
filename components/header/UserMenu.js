@@ -8,7 +8,7 @@ export default function UserMenu({loggedIn}) {
         {loggedIn ? 
 
         <div className={styles.flex}>
-            <img src='https://res.cloudinary.com/ddfzagwob/image/upload/v1668309130/582cbc77150627b3263358f82be5b44f_f533p4.png' alt="" className='styles.menu__img'/>
+            <img src='https://res.cloudinary.com/ddfzagwob/image/upload/v1668309130/582cbc77150627b3263358f82be5b44f_f533p4.png' alt="" className={styles.menu__img}/>
             <div className={styles.col}>
                 <span>Welcome Back,</span>
                 <h3>CRGG</h3>
