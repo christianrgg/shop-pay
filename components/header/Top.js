@@ -57,7 +57,6 @@ export default function Top() {
                   </li> 
                 )}
                 { visible && <UserMenu loggedIn={loggedIn}/> }
-                
                 </li>
             </ul>
         </div>
