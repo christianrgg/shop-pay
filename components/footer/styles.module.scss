@@ -4,19 +4,40 @@
         position: relative;
         width: 100%;
         display: grid;
+        grid-template-areas: 
+        "payment"
+        "links"
+        "newsletter"
+        "socials"
+        "copyright"
+        ;
         gap: 3rem;
-        padding: 1rem;   
+        padding: 1rem; 
+        @media(min-width:800px) {
+            grid-template-areas: 
+            "links socials"
+            "links newsletter"
+            "copyright payment"
+            ;
+        }  
+        @media (min-width:1200px) {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
     }
     img {
         width: 140px;
         height: 40px;
+        object-fit: contain;
     }
     h3 {
         font-size: 12px;
         font-weight: 700;
         color: #222;
     }
+   
     &__links {
+        grid-area: links;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
@@ -38,6 +59,7 @@
         }
     }
     &__socials {
+        grid-area: socials;
         section {
             ul {
                 margin-top: 10px;
@@ -50,6 +72,9 @@
                     &:hover {
                         color: $blue-color;
                     }
+                    @media (max-width:374px) {
+                        font-size: 1.7rem;
+                    }
                 }
             }
         }
@@ -58,8 +83,13 @@
         display: flex;
         margin-top: 10px;
         gap: 5px;
+        @media (max-width:374px) {
+            max-width: 95%;
+            flex-wrap: wrap;
+        }
     }
     &__newsLetter {
+        grid-area: newsletter;
         input {
             outline: none;
             border: 1px solid #999;
@@ -67,9 +97,16 @@
             height: 40px;
             font-size: 14px;
             padding-left: 10px;
+            @media (max-width:374px) {
+                flex: 1 1 50%;
+            }
+            
         }
         button {
             width: 150px;
+            @media (max-width:374px) {
+                flex: 1 1 50%;
+            }
         }
         p {
             margin-top: 10px;
@@ -82,7 +119,7 @@
         }
     }
     &__payment {
-
+        grid-area: payment;
     }
     &__flexwrap {
        display: flex;
@@ -90,12 +127,13 @@
        gap: 10px;
        margin-top: 1rem;
        img {
-        width: 70px;
-        height: 40px;
+        width: 60px;
+        height: 36px;
         object-fit: cover;
        } 
     }
     &__copyright {
+        grid-area: copyright;
         section {           
             font-size: 12px;
             color: #666;
