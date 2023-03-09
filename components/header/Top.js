@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { use, useState } from 'react';
 import UserMenu from './UserMenu';
 
-export default function Top() {
+export default function Top({country}) {
   const[loggedIn, setLoggedIn] = useState(true);
   const [visible, setVisible] = useState(false)
   return (
@@ -15,8 +15,8 @@ export default function Top() {
             <div></div>
             <ul className={styles.top__list}>
                 <li className={styles.li}>
-                  <img src='https://res.cloudinary.com/ddfzagwob/image/upload/v1677296699/shoppay/mexico_d5fjyu.png'/>
-                  <span>Mexico / mxn</span>
+                  <img src={country.flag}/>
+                  <span>{country.name} / usd</span>
                 </li>
                 <li className={styles.li}>
                   <MdSecurity/>
