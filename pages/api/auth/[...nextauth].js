@@ -20,10 +20,10 @@ export const authOptions = {
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
-    FacebookProvider({
-        clientId: process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET
-    }),
+    // FacebookProvider({
+    //     clientId: process.env.FACEBOOK_CLIENT_ID,
+    //     clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+    // }),
     // TwitterProvider({
     //   clientId: process.env.TWITTER_CLIENT_ID,
     //   clientSecret: process.env.TWITTER_CLIENT_SECRET
@@ -33,10 +33,10 @@ export const authOptions = {
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
       issuer: process.env.AUTH0_ISSUER
     }),
-    AppleProvider({
-        clientId: process.env.APPLE_ID,
-        clientSecret: process.env.APPLE_SECRET
-    })
+    // AppleProvider({
+    //     clientId: process.env.APPLE_ID,
+    //     clientSecret: process.env.APPLE_SECRET
+    // })
   ],
   pages: {
     signIn: "/signin"

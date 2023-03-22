@@ -8,14 +8,17 @@ import * as Yup from "yup"
 import LoginInput from "../components/inputs/loginInput";
 import { useState } from "react";
 import CircledIconBtn from "../components/Buttons/circledIconBtn";
+import {getCsrfToken, getProviders, getSession, signIn, country,} from "next-auth/react"
+import { Provider } from "react-redux";
 
 const initialvalues = {
   login_email: "",
   login_password: "",
 }
 
-export default function signin() {
-const [user, setUser] = useState(initialvalues);
+export default function signin({providers}) {
+console.log(providers);
+  const [user, setUser] = useState(initialvalues);
 const {login_email, login_password} = user;
 const handleChange = (e) => {
   const {name, value} = e.target;
@@ -74,10 +77,30 @@ const loginValidation = Yup.object({
                   </Form>
                 )}
               </Formik>
+              <div className={styles.login__socials}>
+                <span className={styles.or}>Or continue with</span>
+                <div className={styles.login__socials_wrap}>
+                  {providers.map((provider)=>(
+                    <div key={provider.name}>
+                      <button className={styles.social__btn} onClick={()=>signIn(provider.id)}>
+                        <img src={`../../icon/${provider.name}.png`} alt=""/>
+                        Sign in with {provider.name}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       <Footer country="Mexico"/>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const providers = Object.values(await getProviders());
+  return {
+    props:{ providers },
+  }
 }
