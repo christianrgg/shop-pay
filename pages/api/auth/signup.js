@@ -37,8 +37,8 @@ handler.post(async(req,res)=>{
 
         });
         // res.send(addedUser);
-        console.log(activation_token);
-        res.send(activation_token)
+        const url = `${process.env.BASE_URL}/activate/${activation_token}`;
+        res.send(url);
     } catch (error) {
         // res.status(500).json({message: error.message})
         res.status(500).json({message: error.message, errorLine: error.stack})
