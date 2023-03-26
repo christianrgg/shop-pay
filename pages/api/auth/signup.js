@@ -4,6 +4,7 @@ import { validateEmail } from "../../../utils/validation";
 import db from "../../../utils/db"
 import User from "../../../models/User";
 import { createActivationToken } from "../../../utils/tokens";
+import { sendEmail } from "../../../utils/sendEmails";
 
 const handler = nextConnect();
 
@@ -38,7 +39,8 @@ handler.post(async(req,res)=>{
         });
         // res.send(addedUser);
         const url = `${process.env.BASE_URL}/activate/${activation_token}`;
-        res.send(url);
+        // res.send(url);
+        sendEmail(email, url, "","Activate your account.")
     } catch (error) {
         // res.status(500).json({message: error.message})
         res.status(500).json({message: error.message, errorLine: error.stack})
