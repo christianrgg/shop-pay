@@ -10,6 +10,7 @@ import { useState } from "react";
 import CircledIconBtn from "../components/Buttons/circledIconBtn";
 import {getCsrfToken, getProviders, getSession, signIn, country,} from "next-auth/react"
 import { Provider } from "react-redux";
+import axios from "axios";
 
 const initialvalues = {
   login_email: "",
@@ -17,13 +18,15 @@ const initialvalues = {
   name:"",
   email:"",
   password:"",
-  conf_password:""
-}
+  conf_password:"",
+  success:"",
+  error:""
+};
 
 export default function signin({providers}) {
-console.log(providers);
+  const [loading, setLoading] = useState(false); 
   const [user, setUser] = useState(initialvalues);
-const {login_email, login_password, name, email, password, conf_password} = user;
+const {login_email, login_password, name, email, password, conf_password, success, error} = user;
 const handleChange = (e) => {
   const {name, value} = e.target;
   setUser({...user, [name]:value});
@@ -48,7 +51,22 @@ const registerValidation = Yup.object({
   conf_password: Yup.string()
   .required("Confirm your password.")
   .oneOf([Yup.ref("password")], "Passwords must match."),
-})
+});
+const signUpHandler =  async() => {
+  try {
+    setLoading(true);
+    const {data} = await axios.post("/api/auth/signup", {
+      name,
+      email,
+      password,
+    });
+    setUser({...user, error:"", success: data.message})
+    setLoading(false);
+  } catch (error) {
+    setLoading(false);
+    setUser({...user, success:"", error: error.response.data.message})
+  }
+}
   return (
     <div>
       <Header country="Mexico"/>
@@ -124,6 +142,9 @@ const registerValidation = Yup.object({
                 name, email, password, conf_password,
               }}
               validationSchema = {registerValidation}
+              onSubmit={()=>{
+                signUpHandler();
+              }}
               >
                 {(form)=>(
                   <Form>
@@ -159,6 +180,8 @@ const registerValidation = Yup.object({
                   </Form>
                 )}
               </Formik>
+              <div>{success && <span>{success}</span>}</div>
+              <div>{error && <span>{error}</span>}</div>
             </div>
           </div>
         </div>
