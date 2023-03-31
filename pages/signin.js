@@ -11,6 +11,8 @@ import CircledIconBtn from "../components/Buttons/circledIconBtn";
 import {getCsrfToken, getProviders, getSession, signIn, country,} from "next-auth/react"
 import { Provider } from "react-redux";
 import axios from "axios";
+import DotLoaderSpinner from "../components/loaders/dotLoader/index"
+import Router from "next/router"
 
 const initialvalues = {
   login_email: "",
@@ -62,6 +64,9 @@ const signUpHandler =  async() => {
     });
     setUser({...user, error:"", success: data.message})
     setLoading(false);
+    setTimeout(()=>{
+      Router.push("/");
+    },2000)
   } catch (error) {
     setLoading(false);
     setUser({...user, success:"", error: error.response.data.message})
@@ -69,6 +74,9 @@ const signUpHandler =  async() => {
 }
   return (
     <div>
+      {
+        loading && <DotLoaderSpinner loading={loading}/>
+      }
       <Header country="Mexico"/>
         <div className={styles.login}>
           <div className={styles.login__container}>
@@ -180,8 +188,8 @@ const signUpHandler =  async() => {
                   </Form>
                 )}
               </Formik>
-              <div>{success && <span>{success}</span>}</div>
-              <div>{error && <span>{error}</span>}</div>
+              <div>{success && <span className={styles.success}>{success}</span>}</div>
+              <div>{error && <span className={styles.error}>{error}</span>}</div>
             </div>
           </div>
         </div>

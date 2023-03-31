@@ -127,3 +127,13 @@
     border: 1px solid #66666683;
     cursor: pointer;
 }
+.error {
+    padding: 10px;
+    font-weight: 700;
+    color: $error-color;
+}
+.success {
+    padding: 10px;
+    font-weight: 700;
+    color: $success-color;
+}
