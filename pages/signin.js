@@ -26,7 +26,7 @@ const initialvalues = {
   login_error: "",
 };
 
-export default function signin({providers}) {
+export default function signin({providers, callbackUrl, csrfToken}) {
   const [loading, setLoading] = useState(false); 
   const [user, setUser] = useState(initialvalues);
 const {login_email, login_password, name, email, password, conf_password, success, error, login_error} = user;
@@ -81,14 +81,20 @@ const signUpHandler =  async() => {
 };
 const signInHandler = async() => {
   setLoading(true);
- 
+  let options = {
+    redirect: false,
+    email: login_email,
+    password: login_password,
+  };
+  const res = await signIn("credentials", options);
   setUser({...user,success:"", error:""});
   setLoading(false);
+
   if(res?.error){
     setLoading(false);
     setUser({...user, login_error: res?.error});
   } else {
-    return Router.push("/");
+    return Router.push(callbackUrl || "/");
   };
 };
   return (
@@ -123,7 +129,12 @@ const signInHandler = async() => {
               }}
               >
                 {(form)=>(
-                  <Form>
+                  <Form method="post" action="/api/auth/signin/email">
+                    <input type="hidden"
+                    name="csrfToken"
+                    defaultValue={csrfToken}
+                    
+                    />
                     <LoginInput 
                     type = "text"
                     name = "login_email"
@@ -154,14 +165,19 @@ const signInHandler = async() => {
               <div className={styles.login__socials}>
                 <span className={styles.or}>Or continue with</span>
                 <div className={styles.login__socials_wrap}>
-                  {providers.map((provider)=>(
-                    <div key={provider.name}>
-                      <button className={styles.social__btn} onClick={()=>signIn(provider.id)}>
-                        <img src={`../../icon/${provider.name}.png`} alt=""/>
-                        Sign in with {provider.name}
-                      </button>
-                    </div>
-                  ))}
+                  {providers.map((provider)=>{
+                    if(provider.name=="Credentials"){
+                      return;
+                    }
+                    return (
+                      <div key={provider.name}>
+                        <button className={styles.social__btn} onClick={()=>signIn(provider.id)}>
+                          <img src={`../../icon/${provider.name}.png`} alt=""/>
+                          Sign in with {provider.name}
+                        </button>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -227,8 +243,21 @@ const signInHandler = async() => {
 }
 
 export async function getServerSideProps(context) {
+  const {req, query} = context;
+
+  const session = await getSession({req})
+  const {callbackUrl} = query;
+
+  if(session) {
+    return {
+      redirect: {
+        destination: callbackUrl,
+      },
+    };
+  }
+  const csrfToken = await getCsrfToken(context);
   const providers = Object.values(await getProviders());
   return {
-    props:{ providers },
+    props:{ providers, csrfToken, callbackUrl },
   }
 }
