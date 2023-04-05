@@ -22,13 +22,14 @@ const initialvalues = {
   password:"",
   conf_password:"",
   success:"",
-  error:""
+  error:"",
+  login_error: "",
 };
 
 export default function signin({providers}) {
   const [loading, setLoading] = useState(false); 
   const [user, setUser] = useState(initialvalues);
-const {login_email, login_password, name, email, password, conf_password, success, error} = user;
+const {login_email, login_password, name, email, password, conf_password, success, error, login_error} = user;
 const handleChange = (e) => {
   const {name, value} = e.target;
   setUser({...user, [name]:value});
@@ -64,14 +65,32 @@ const signUpHandler =  async() => {
     });
     setUser({...user, error:"", success: data.message})
     setLoading(false);
-    setTimeout(()=>{
+    setTimeout(async ()=>{
+      let options = {
+        redirect: false,
+        email: email,
+        password: password,
+      };
+      const res=await signIn("credentials", options);
       Router.push("/");
     },2000)
   } catch (error) {
     setLoading(false);
     setUser({...user, success:"", error: error.response.data.message})
   }
-}
+};
+const signInHandler = async() => {
+  setLoading(true);
+ 
+  setUser({...user,success:"", error:""});
+  setLoading(false);
+  if(res?.error){
+    setLoading(false);
+    setUser({...user, login_error: res?.error});
+  } else {
+    return Router.push("/");
+  };
+};
   return (
     <div>
       {
@@ -99,6 +118,9 @@ const signUpHandler =  async() => {
                 login_email, login_password,
               }}
               validationSchema = {loginValidation}
+              onSubmit={()=>{
+                signInHandler();
+              }}
               >
                 {(form)=>(
                   <Form>
@@ -117,11 +139,17 @@ const signUpHandler =  async() => {
                     onChange = {handleChange}
                     />
                     <CircledIconBtn type="submit" text="Sign in"/>
+                    {
+                     login_error && (
+                     <span className={styles.error}>{login_error}</span>
+                     )
+                    }
                     <div className={styles.forgot}>
                       <Link href="/forget">Forgot password ?</Link>
                     </div>
                   </Form>
                 )}
+               
               </Formik>
               <div className={styles.login__socials}>
                 <span className={styles.or}>Or continue with</span>
