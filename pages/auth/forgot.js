@@ -16,7 +16,6 @@ export default function forgot() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState("");
-  const [messages, setMessages] = useState([]);
   const emailValidation=Yup.object({
     email: Yup.string()
     .required("You'll need this when you log in and if you ever need to reset your password.")

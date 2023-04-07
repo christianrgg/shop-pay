@@ -41,8 +41,8 @@ const loginValidation = Yup.object({
 const registerValidation = Yup.object({
   name:Yup.string()
   .required("What´s your name ?")
-  .min(2, "First name must be between 2 and 16 characters.")
-  .max(16, "First name must be between 2 and 16 characters.")
+  .min(2, "First name must be between 2 and 42 characters.")
+  .max(42, "First name must be between 2 and 42 characters.")
   .matches(/^[aA-zZ]/, "Numbers and special characters are not allowed."),
   email: Yup.string()
   .required("You'll need this when you log in and if you ever need to reset your password.")
