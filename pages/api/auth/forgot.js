@@ -3,8 +3,9 @@ import bcrypt from "bcrypt"
 import { validateEmail } from "../../../utils/validation";
 import db from "../../../utils/db"
 import User from "../../../models/User";
-import { createActivationToken } from "../../../utils/tokens";
+import { createActivationToken, createResetToken } from "../../../utils/tokens";
 import { sendEmail } from "../../../utils/sendEmails";
+import { resetEmailTemplate } from "../../../emails/resetEmailTemplate";
 
 const handler = nextConnect();
 
@@ -14,13 +15,16 @@ handler.post(async(req,res)=>{
         const {email}= req.body;
         const user = await User.findOne({email});
         if(!user){
-            return res.json({message:"This email does not exist."})
+            return res.status(400).json({message:"This email does not exist."})
         }
-        const url = `${process.env.BASE_URL}/activate/${activation_token}`;
-        res.send(email);
-        sendEmail(email, url, "","Activate your account.");
+        const user_id = createResetToken({
+            id: user._id.toString(),
+        }); 
+        const url = `${process.env.BASE_URL}/auth/reset/${user_id}`;
+        // res.send(email);
+        sendEmail(email, url, "","Reset your password", resetEmailTemplate);
         await db.disconnectDb();
-        res.json({message:"Register success! Please activate your email to start."});
+        res.json({message:"An email has been sent to you, use it to reset your password."});
     } catch (error) {
         res.status(500).json({message: error.message, errorLine: error.stack})
     }
