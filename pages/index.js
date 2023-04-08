@@ -5,6 +5,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import axios from 'axios';
 import { useSession, signIn, signOut } from "next-auth/react"
+import Main from '../components/home/main';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,10 +13,15 @@ export default function Home({country}) {
   const { data: session } = useSession()
   console.log(session);
   return (
-    <div>
+    <>
       <Header country={country}/>
+      <div className={styles.home}>
+        <div className={styles.container}>
+          <Main/>
+        </div>
+      </div>
       <Footer country={country}/>
-    </div>
+    </>
   );
 }
 export async function getServerSideProps(){
