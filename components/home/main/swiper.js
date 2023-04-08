@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation } from "swiper";
+import { Pagination, Navigation, Autoplay } from "swiper";
 
 export default function MainSwiper() {
   return (
@@ -16,8 +16,12 @@ export default function MainSwiper() {
         pagination={{
           clickable: true,
         }}
+        autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+        }}
         navigation={true}
-        modules={[Pagination, Navigation]}
+        modules={[Pagination, Navigation, Autoplay]}
         className="mainSwiper"
       >
         {
