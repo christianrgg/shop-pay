@@ -79,7 +79,7 @@ $shadow-1:rgb(99,99,99,0.2) 0px 2px 8px 0px;
         }
     }
 }
-.mainSwiper {
+.mainSwiper, .offers_swiper {
     .swiper {
         border-radius: 10px !important;
         overflow: hidden !important;
@@ -115,6 +115,11 @@ $shadow-1:rgb(99,99,99,0.2) 0px 2px 8px 0px;
     } 
     .swiper-button-next {
         right: -13px !important;
+    }
+}
+.offers_swiper {
+    .swiper-pagination {
+        display: none;
     }
 }
 // ------------- SWIPER ------------- //
