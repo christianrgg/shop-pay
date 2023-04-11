@@ -1,4 +1,4 @@
-export const offersAarray = [
+export const offersArray = [
     {
       image:
         "https://ae01.alicdn.com/kf/H7026c7b0e94641b197a629356be07928y.jpg_220x220.webp_480x480Q90.webp",
