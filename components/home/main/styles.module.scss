@@ -115,12 +115,13 @@
       ul {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 2rem;
         li {
           height: 100%;
           display: flex;
           align-items: center;
           font-size: 19px;
+          font-weight: 600;
           color: $blue-color;
         }
       }
@@ -179,7 +180,6 @@
         }
       }
     }
-    
     .user {
       position: relative;
       grid-area: user;
@@ -189,8 +189,6 @@
       box-shadow: $shadow-1;
       @media (max-width: 1232px) {
         display: none;
-      }
-      &__header {
       }
       &__container {
         padding: 1rem;
