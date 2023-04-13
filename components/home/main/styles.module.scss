@@ -179,6 +179,7 @@
         }
       }
     }
+    
     .user {
       position: relative;
       grid-area: user;
@@ -235,7 +236,7 @@
         }
       }
       &__links {
-        margin-top: 1rem;
+        margin-top: 4rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -248,8 +249,11 @@
           border-radius: 50%;
           display: grid;
           place-items: center;
+          align-items: center;
           transition: 0.2s;
           svg {
+            align-items: center;
+            justify-content: center;
             width: 28px;
             height: 28px;
             stroke: $blue-color;
@@ -278,6 +282,10 @@
         bottom: 0;
         transform: rotate(180deg);
       }
+    }
+    .user ul li a svg {
+      display: block;
+      margin: 0 auto;
     }
   }
   .new {
