@@ -11,9 +11,10 @@ $shadow-2:rgb(99,99,99,0.1) 0px 0px 4px 0px;
 
 
 .container {
-    max-width: 1500px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 1rem;
+    overflow-x: hidden;
 }
 .btn_primary {
     display: flex;
@@ -84,7 +85,7 @@ $shadow-2:rgb(99,99,99,0.1) 0px 0px 4px 0px;
         }
     }
 }
-.mainSwiper, .offers_swiper, .user__swiper {
+.mainSwiper, .offers_swiper, .user__swiper, .flashDeals_swiper {
     .swiper {
         border-radius: 10px !important;
         overflow: hidden !important;
