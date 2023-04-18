@@ -28,7 +28,7 @@ function getRemainingSeconds(nowDayjs, timestamDayjs) {
     return padWithZeros(minutes, 2);
   }
   function getRemainingHours(nowDayjs, timestamDayjs) {
-    const hours = timestamDayjs.diff(nowDayjs, "hours") % 60;
+    const hours = timestamDayjs.diff(nowDayjs, "hours") % 24;
     return padWithZeros(hours, 2);
   }
   function getRemainingDays(nowDayjs, timestamDayjs) {

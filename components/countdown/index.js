@@ -26,12 +26,12 @@ export default function Countdown({date}) {
   }
   return (
     <div className={styles.countdown}>
-        {/* {
+        {
           [...Array(remainingTime?.days.length).keys()].map((d,i)=>(
             <span>{remainingTime?.days.slice(i,i+1)}</span>
           ))
         }
-        <b>:</b> */}
+        <b>:</b>
         <span>{remainingTime?.hours.slice(0, 1)}</span>
         <span>{remainingTime?.hours.slice(1, 2)}</span>
         <b>:</b>
