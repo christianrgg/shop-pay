@@ -8,8 +8,9 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import Main from '../components/home/main';
 import FlashDeals from '../components/home/flashDeals';
 import Categoy from '../components/home/category';
-import { women_accessories, women_dresses, women_shoes } from '../data/home';
+import { women_accessories, women_dresses, women_shoes, women_swiper } from '../data/home';
 import { useMediaQuery } from 'react-responsive';
+import ProductsSwipper from '../components/productsSwipper';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -32,6 +33,7 @@ export default function Home({country}) {
             {isMobile && ( <Categoy header="Shoes" products={women_shoes} background="#3c811f"/>)}
             <Categoy header="Accesories" products={women_accessories} background="#000"/>
           </div>
+          <ProductsSwipper products={women_swiper}/>
         </div>
       </div>
       <Footer country={country}/>
