@@ -7,10 +7,10 @@ import { Navigation} from "swiper";
 
 
 
-export default function ProductsSwipper({header, products}) {
+export default function ProductsSwipper({header, products, bg}) {
   return (
     <div className={styles.wrapper}>
-        {header && <div className={styles.header}>{header}</div>}
+        {header && <div className={styles.header} style={{background: `${bg ? bg : ""}`}}>{header}</div>}
         <Swiper
         slidesPerView={1}
         spaceBetween={10}
@@ -44,7 +44,7 @@ export default function ProductsSwipper({header, products}) {
                 </div>
                 <div className={styles.product__infos}>
                 <h1>{product.name.length > 28 ? `${product.name.slice(0,24)}...` : product.name}</h1>
-                <span>USD{product.price}$</span>
+                {product.price &&<span>USD{product.price}$</span>}
                 </div>
               </div>
             </SwiperSlide>
