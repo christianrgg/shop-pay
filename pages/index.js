@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive';
 import ProductsSwipper from '../components/productsSwipper';
 import db from "../utils/db";
 import Product from '../models/Product';
+import ProductCard from '../components/productCard';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -38,6 +39,13 @@ export default function Home({country, products}) {
           <ProductsSwipper products={women_swiper} />
           <ProductsSwipper products={gamingSwiper} header="For Gamers" bg="#2f82ff"/>
           <ProductsSwipper products={homeImprovSwiper} header="House Improvement" bg="##ff8f84"/>
+          <div className={styles.products}>
+            {
+              products.map((product)=>(
+                <ProductCard product={product} key={product._id}/>
+              ))
+            }
+          </div>
         </div>
       </div>
       <Footer country={country}/>
