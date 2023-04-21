@@ -11,11 +11,13 @@ import Categoy from '../components/home/category';
 import { gamingSwiper, homeImprovSwiper, women_accessories, women_dresses, women_shoes, women_swiper } from '../data/home';
 import { useMediaQuery } from 'react-responsive';
 import ProductsSwipper from '../components/productsSwipper';
-
+import db from "../utils/db";
+import Product from '../models/Product';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({country}) {
+export default function Home({country, products}) {
+  console.log("Products",products);
   const { data: session } = useSession()
   // console.log(session);
   const isMedium = useMediaQuery({query:"(max-width:850px)"});
@@ -43,6 +45,9 @@ export default function Home({country}) {
   );
 }
 export async function getServerSideProps(){
+  db.connectDB();
+  let products = await Product.find().sort({ createdAt: -1 }).lean();
+  
   let data = await axios
   // .get("https://api.ipregistry.co/?key=1i8mceb7ky4nhygy") esta es key correcta
   .get("https://api.ipregistry.co/?key=1i8mceb7ky4nhyg")
@@ -54,6 +59,7 @@ export async function getServerSideProps(){
   });
   return {
     props: {
+      products: JSON.parse(JSON.stringify(products)),
       // country: {name: data.name, flag: data.flag.emojitwo },
       country: {name: "Mexico", flag: "https://res.cloudinary.com/ddfzagwob/image/upload/v1677296699/shoppay/mexico_d5fjyu.png"},
     }
