@@ -67,9 +67,12 @@ export async function getServerSideProps(context) {
         colors: product.subProducts.map((p)=>{
             return p.color;
         }),
-        priceRange: prices.length>1 
-            ? `From ${prices[0]} to ${prices[prices.length-1]}$`
-            :"",
+        priceRange: subProduct.discount 
+            ?`From ${(prices[0]-prices[0] / subProduct.discount).toFixed(2)} to ${
+                (prices[prices.length-1] - 
+                prices[prices.length-1] / subProduct.discount).toFixed(2)
+            }$` 
+            : `From ${prices[0]} to ${prices[prices.length-1]}$`,
         price: subProduct.discount> 0 
         ? (subProduct.sizes[size].price -
           (subProduct.sizes[size].price / subProduct.discount)).toFixed(2)
