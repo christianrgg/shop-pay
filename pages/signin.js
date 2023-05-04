@@ -244,22 +244,29 @@ const signInHandler = async() => {
 }
 
 export async function getServerSideProps(context) {
-  const {req, query} = context;
+  try {
+    const {req, query} = context;
 
-  const session = await getSession({req})
-  const {callbackUrl} = query;
-
-  if(session) {
+    const session = await getSession({req})
+    const {callbackUrl} = query;
+  
+    if(session) {
+      return {
+        redirect: {
+          destination: callbackUrl || '/',
+        },
+      };
+    }
+    const csrfToken = await getCsrfToken(context);
+    const providers = Object.values(await getProviders());
     return {
-      redirect: {
-        destination: callbackUrl || '/',
-      },
-    };
-  }
-  const csrfToken = await getCsrfToken(context);
-  const providers = Object.values(await getProviders());
-  return {
-    props:{ providers, csrfToken, callbackUrl: callbackUrl || '/' },
+      props:{ providers, csrfToken, callbackUrl: callbackUrl || '/' },
+    } 
+  } catch (error) {
+    console.error(`Error en getServerSideProps con el contexto:`, context);
+    console.error(`Descripción del error:`, error);
+    console.error(`Traza de la pila:`, error.stack);
+    throw error;
   }
 }
 
