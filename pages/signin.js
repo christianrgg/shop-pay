@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import DotLoaderSpinner from "../components/loaders/dotLoader/index"
 import Router from "next/router"
+import Image from 'next/image';
 
 const initialvalues = {
   login_email: "",
@@ -173,6 +174,7 @@ const signInHandler = async() => {
                       <div key={provider.name}>
                         <button className={styles.social__btn} onClick={()=>signIn(provider.id)}>
                           <img src={`../../icon/${provider.name}.png`} alt=""/>
+                          {/* <Image src={`/icon/${provider.name}.png`} alt="" width={36} height={36} /> */}
                           Sign in with {provider.name}
                         </button>
                       </div>

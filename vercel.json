@@ -1,0 +1,14 @@
+{
+    "build": {
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1"
+      },
+      "ignore": [
+        {
+          "type": "warning",
+          "message": "Using `<img>` could result in slower LCP and higher bandwidth"
+        }
+      ]
+    }
+  }
+  
