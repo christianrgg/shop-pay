@@ -10,7 +10,7 @@ import MainSwiper from "../../components/productPage/mainSwiper"
 import { useState } from "react"
 import Infos from "../../components/productPage/infos"
 
-export default function product({product}) { 
+export default function ProductPage({product}) { 
     const [activeImg, setActiveImg] = useState("")
     return (
     <>
