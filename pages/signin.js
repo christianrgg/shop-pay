@@ -26,7 +26,7 @@ const initialvalues = {
   login_error: "",
 };
 
-export default function signin({providers, callbackUrl, csrfToken}) {
+export default function Signin({providers, callbackUrl, csrfToken}) {
   const [loading, setLoading] = useState(false); 
   const [user, setUser] = useState(initialvalues);
 const {login_email, login_password, name, email, password, conf_password, success, error, login_error} = user;

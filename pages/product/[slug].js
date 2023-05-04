@@ -22,8 +22,8 @@ export default function ProductPage({product}) {
             <div className={styles.container}>
                 <div className={styles.path}>
                     Home / {product.category.name}
-                    {product.subCategories.map((sub) =>(
-                            <span>/{sub.name}</span>
+                    {product.subCategories.map((sub, index) =>(
+                            <span key={index}>/{sub.name}</span>
                         ))
                     }
                 </div>
