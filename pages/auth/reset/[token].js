@@ -13,7 +13,7 @@ import DotLoaderSpinner from "../../../components/loaders/dotLoader/index"
 import jwt from "jsonwebtoken";
 import { getSession, signIn } from "next-auth/react";
 
-export default function reset({user_id}) {
+export default function Reset({user_id}) {
   console.log("user_id", user_id);
   const [password, setPassword] = useState("");
   const [conf_password, setConf_password] = useState("");
