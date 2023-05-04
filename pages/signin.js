@@ -13,7 +13,6 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import DotLoaderSpinner from "../components/loaders/dotLoader/index"
 import Router from "next/router"
-import Image from 'next/image';
 
 const initialvalues = {
   login_email: "",
@@ -253,13 +252,14 @@ export async function getServerSideProps(context) {
   if(session) {
     return {
       redirect: {
-        destination: callbackUrl,
+        destination: callbackUrl || '/',
       },
     };
   }
   const csrfToken = await getCsrfToken(context);
   const providers = Object.values(await getProviders());
   return {
-    props:{ providers, csrfToken, callbackUrl },
+    props:{ providers, csrfToken, callbackUrl: callbackUrl || '/' },
   }
 }
+
