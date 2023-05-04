@@ -63,6 +63,7 @@ export default function ProductCard({ product }) {
                 styless && styless.map((style,i)=>(
                   style.image ?
                   <img src={style.image}
+                  key={i}
                   className={i==active && styles.active}
                   onMouseOver={()=>{
                     setImages(product.subProducts[i].images);
@@ -71,6 +72,7 @@ export default function ProductCard({ product }) {
                   alt=""/>
                   : (
                     <span style={{backgroundColor: `${style.color}`}}
+                    key={i}
                     onMouseOver={()=>{
                       setImages(product.subProducts[i].images);
                       setActive(i);

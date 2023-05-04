@@ -13,8 +13,8 @@ export default function Categoy({header, products, background}) {
         </div>
         <div className={styles.category__products}>
             {
-                products.slice(0, isMobile ? 6 : isMedium ? 4 : 6).map((product)=>(
-                    <div className={styles.product}>
+                products.slice(0, isMobile ? 6 : isMedium ? 4 : 6).map((product, i)=>(
+                    <div className={styles.product} key={i}>
                         <img src={product.image} alt=""/>
                     </div>
                 ))
