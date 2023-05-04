@@ -11,7 +11,7 @@ import { useState } from "react";
 import axios from "axios";
 import DotLoaderSpinner from "../../components/loaders/dotLoader/index"
 
-export default function forgot() {
+export default function Forgot() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
