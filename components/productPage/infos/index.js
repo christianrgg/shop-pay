@@ -7,6 +7,7 @@ import {TbPlus, TbMinus} from "react-icons/tb"
 import {BsHeart, BsHandbagFill } from "react-icons/bs";
 import Share from "../share";
 import Accordian from "./Accordian";
+import SimilarSwiper from "./SimilarSwiper";
 
 export default function Infos({product, setActiveImg}) {
     const router = useRouter();
@@ -65,7 +66,7 @@ export default function Infos({product, setActiveImg}) {
                 <h4>Select a Size:</h4>
                 <div className={styles.infos__sizes_wrap}>
                     {product.sizes.map((size,i)=>(
-                        <Link href={`/product/${product.slug}?style=${router.query.style}&size=${i}`}
+                        <Link key= {i} href={`/product/${product.slug}?style=${router.query.style}&size=${i}`}
                         >
                             <div className={`${styles.infos__sizes_size} ${i==router.query.size && styles.active_size}`}
                             onClick={()=>setSize(size.size)}
@@ -80,6 +81,7 @@ export default function Infos({product, setActiveImg}) {
                 {
                     product.colors && product.colors.map((color,i)=>(
                         <span
+                        key={i}
                         className={i==router.query.style ? styles.active_color : ""}
                         onMouseOver={()=>setActiveImg(product.subProducts[i].images[0].url)}
                         onMouseLeave={()=>setActiveImg("")}
@@ -121,6 +123,7 @@ export default function Infos({product, setActiveImg}) {
             </div>
             <Share/>
             <Accordian details ={[product.description, ...product.details]}/>
+            <SimilarSwiper/>
         </div>
     </div>
   )
