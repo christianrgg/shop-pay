@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from 'next/link';
 import {TbPlus, TbMinus} from "react-icons/tb"
 import {BsHeart, BsHandbagFill } from "react-icons/bs";
-import Share from "../share";
+import Share from "./share";
 import Accordian from "./Accordian";
 import SimilarSwiper from "./SimilarSwiper";
 
