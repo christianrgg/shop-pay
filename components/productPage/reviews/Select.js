@@ -18,8 +18,17 @@ export default function Select({property, text, data, handleChange}) {
         >
             <span className={`${styles.flex} ${styles.select__header_wrap}`} style={{padding:"0 5px"}}
             >    
-                {text =="Size" ? (property ||`Select ${text}`): 
-                text=="Style" && property.image ? (<img src={property.image} alt=""/> ): ("Select Style")
+                {text =="Size" ? (
+                    property ||`Select ${text}`
+                    ): text=="Style" && property.image ? (
+                    <img src={property.image} alt=""/> 
+                    ): text=="How does it fit" && property ? (
+                        property
+                    ) : ( !property && text == "How does it fit" ? (
+                        "How does it fit"
+                    ) : (
+                        "Select Style")
+                    )
                 }
                 <IoArrowDown/>
             </span>
@@ -43,6 +52,13 @@ export default function Select({property, text, data, handleChange}) {
                                 <span>
                                     <img src={item.image}/>
                                 </span>
+                            </li>
+                        );
+                    }
+                    if(text=="How does it fit"){
+                        return (
+                            <li key={i} onClick={()=>handleChange(item)}>
+                                <span>{item}</span>
                             </li>
                         );
                     }
