@@ -3,6 +3,7 @@ import db from "../../utils/db"
 import Product from "../../models/Product"
 import Category from "../../models/Category"
 import SubCategory from "../../models/Subcategory"
+import User from "../../models/User"
 import Head from "next/head"
 import Header from "../../components/header"
 import Footer from "../../components/footer"
@@ -13,6 +14,7 @@ import Reviews from "../../components/productPage/reviews"
 
 export default function ProductPage({product}) { 
     const [activeImg, setActiveImg] = useState("")
+    console.log("Reviews", product.reviews);
     return (
     <>
         <Head>
@@ -50,6 +52,7 @@ export async function getServerSideProps(context) {
     let product = await Product.findOne({slug})
         .populate({path:"category", model:Category})
         .populate({path:"subCategories._id", model:SubCategory, strictPopulate: false})
+        .populate({path:"reviews.reviewBy", model:User, strictPopulate: false})
         .lean();
     let subProduct = product.subProducts[style];
     let prices = (subProduct.sizes
