@@ -47,7 +47,7 @@ export default function Reviews({product}) {
                 onClick={()=> signIn()}
                 className={styles.login_btn}>Login to add review</button>
                 }
-                <Table reviews={product.reviews}/>
+                <Table reviews={product.reviews} allSizes={product.allSizes} colors={product.colors} />
         </div>
     </div>
   )
