@@ -36,6 +36,7 @@ export default function ProductPage({product}) {
                 </div>
                 <Reviews product={product}/>
             </div>
+        <Footer country=""/>
         </div>
     </>
   )
