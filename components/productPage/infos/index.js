@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import styles from "./styles.module.scss"
 import Rating from "@mui/material/Rating";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Link from 'next/link';
 import {TbPlus, TbMinus} from "react-icons/tb"
 import {BsHeart, BsHandbagFill } from "react-icons/bs";
@@ -9,24 +9,65 @@ import Share from "./share";
 import Accordian from "./Accordian";
 import SimilarSwiper from "./SimilarSwiper";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {addToCart, updateCart} from "../../../store/cartSlice"
 
 export default function Infos({product, setActiveImg}) {
     const router = useRouter();
+    const dispatch = useDispatch();
     const [size, setSize] = useState(router.query.size);
     const [qty, setQty] = useState(1);
+    const [error, setError] = useState("");
+    const { cart } = useSelector((state) => ({ ...state }));
+    console.log("cart->",cart.cartItems);
     useEffect(()=>{
         setSize("");
         setQty(1);
     }, [router.query.style]);
     useEffect(()=>{
         if(qty>product.quantity){
-            setQty(product.quantity)
+            setQty(product.quantity);
         }
-    },[router.query.size]);
-    const addToCartHandler = async()=> {
-        const{data} = await axios.get(`/api/product/${product._id}?style=${product.style}&size=${router.query.size}`);
-        console.log("data---->", data);
-    }
+    },[qty, product.quantity]);
+    
+    const addToCartHandler = async () => {
+        if(!router.query.size){
+            setError("Please select a size");
+            return;
+        };
+        const{ data } = await axios.get(
+            `/api/product/${product._id}?style=${product.style}&size=${router.query.size}`
+            );
+            console.log("dataPrueba xx", data);
+        if(qty>data.quantity){
+            setError("The quantity you have choosed is more than in stock. Try and lower the quantity");
+        } else if (data.quantity<1) {
+            setError("This Product is out of stock.");
+            return;
+        } else {
+            let _uid = `${data._id}_${product.style}_${router.query.size}`;
+            let exist = cart.cartItems.find((p) => p._uid === _uid); 
+            if (exist) {
+                let newCart = cart.cartItems.map((p) => {
+                    if (p._uid == exist._uid) {
+                      return { ...p, qty: qty };
+                    }
+                    return p;
+                  });
+                  dispatch(updateCart(newCart));   
+            } else {
+                dispatch(
+                    addToCart(
+                    {
+                        ...data, 
+                        qty, 
+                        size: data.size,
+                        _uid,
+                    }
+                ));
+            }
+        }
+    };
     return (
     <div className={styles.infos}>
         <div className={styles.infos__container}>
@@ -127,6 +168,9 @@ export default function Infos({product, setActiveImg}) {
                     WISHLIST
                 </button>
             </div>
+            {
+                error && <span className={styles.error}>{error}</span>
+            }
             <Share/>
             <Accordian details ={[product.description, ...product.details]}/>
             <SimilarSwiper/>

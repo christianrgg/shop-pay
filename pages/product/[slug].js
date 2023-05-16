@@ -14,7 +14,7 @@ import Reviews from "../../components/productPage/reviews"
 
 export default function ProductPage({product}) { 
     const [activeImg, setActiveImg] = useState("")
-    console.log("Reviews", product.reviews);
+    // console.log("Reviews", product.reviews);
     return (
     <>
         <Head>
@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
     const slug    = query.slug;
     const style   = query.style;
     const size    = query.size || 0;
-    console.log(slug, style, size);
+    // console.log(slug, style, size);
     db.connectDB();
     //-------------
     let product = await Product.findOne({slug})

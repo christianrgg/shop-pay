@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Empty from "../components/cart/empty";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+    key: "root",
+    storage,
+  };
 
 const initialState = {
     cartItems: [],
@@ -22,5 +28,5 @@ export const cartSlice = createSlice({
 });
 
 export const {addToCart, updateCart, emptyCart} = cartSlice.actions;
-
-export default cartSlice.reducer;
+const persistedReducer = persistReducer(persistConfig, cartSlice.reducer);
+export default persistedReducer;
