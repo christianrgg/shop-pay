@@ -2,9 +2,31 @@ import styles from "./styles.module.scss";
 import {BsHeart} from "react-icons/bs";
 import {AiOutlineDelete} from "react-icons/ai"
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCart } from "../../../store/cartSlice";
 
 export default function Product({product}) {
-  return (
+  const {cart}= useSelector ((state) =>({...state}));
+  const dispatch = useDispatch();
+  const updateQty = (type) => {
+    let newCart = cart.cartItems.map((p) => {
+        if (p._uid == product._uid) {
+            return {
+                ...p,
+                qty: type == "plus" ? product.qty + 1 : product.qty - 1,
+            };
+        }
+        return p;
+    });
+    dispatch(updateCart(newCart));
+  };
+  const removeProduct = (id) => {
+    let newCart = cart.cartItems.filter((p)=> {
+        return p._uid != id;
+    });
+    dispatch(updateCart(newCart));
+  }
+    return (
     <div className={`${styles.card} ${styles.product}`}>
         {product.quantity < 1 && <div className={styles.blur}></div>}
         <div className={styles.product__header}>
@@ -25,7 +47,7 @@ export default function Product({product}) {
                     <div style={{zIndex:"2"}}>
                         <BsHeart/>
                     </div>
-                    <div style={{zIndex:"2"}}>
+                    <div style={{zIndex:"2"}} onClick={()=>removeProduct(product._uid)}>
                         <AiOutlineDelete/>
                     </div>
                 </div>
@@ -52,9 +74,9 @@ export default function Product({product}) {
                         }
                     </div>
                     <div className={styles.product__priceQty_qty}>
-                        <button disabled={product.qty<2}>-</button>
+                        <button disabled={product.qty<2} onClick={()=> updateQty("minus")}>-</button>
                         <span>{product.qty}</span>
-                        <button disabled={product.qty == product.quantity}>+</button>
+                        <button disabled={product.qty == product.quantity} onClick={()=> updateQty("plus")}>+</button>
                     </div>
                 </div>
                 <div className={styles.product__shipping}>

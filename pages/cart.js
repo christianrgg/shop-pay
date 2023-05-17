@@ -10,7 +10,7 @@ export default function Cart() {
     <>
         <Header/>
         <div className={styles.cart}>
-            {cart.cartItems.length >= 1 ? (
+            {cart.cartItems.length > 0 ? (
             <div className={styles.cart__container}>
               <div className={styles.cart__products}>
                 {
