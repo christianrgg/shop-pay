@@ -121,16 +121,6 @@
         color: $blue-color;
     }
 }
-.checkbox {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 1px solid #cccccc;
-    cursor: pointer;
-    &:hover {
-        border-color: $blue-color;
-    }
-}
 .notAvailable {
     color: $redish-color;
     font-size: 15px;
