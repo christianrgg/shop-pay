@@ -1,11 +1,29 @@
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
+import { useState, useEffect } from "react";
+import {compareArrays} from "../../../utils/arrays_util"
 
-export default function CartHeader({cartItems}) {
+export default function CartHeader({cartItems, selected, setSelected}) {
+  const [active, setActive] = useState();
+  // useEffect(()=>{
+  //   const check = JSON.stringify(cartItems) == JSON.stringify(selected)
+  //   setActive(check)
+  // },[selected, cartItems]);
+  useEffect(()=>{
+    const check = compareArrays(cartItems, selected)
+    setActive(check)
+  },[selected, cartItems]);
+  const handleSelect = () => {
+    if(selected.length !== cartItems.length){
+      setSelected(cartItems)
+    } else {
+      setSelected([]);
+    }
+  };
   return (
     <div className={`${styles.cart__header} ${styles.card}`}>
         <h1>Item Summary ({cartItems.length})</h1>
-        <div className={styles.flex}>
-            <div className={styles.checkbox}></div>
+        <div className={styles.flex} onClick={()=> handleSelect()}>
+            <div className={`${styles.checkbox} ${active ? styles.active : ""}`}></div>
             <span>Select all items</span>
         </div>
     </div>
