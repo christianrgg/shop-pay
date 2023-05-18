@@ -10,8 +10,12 @@ import { useEffect } from "react";
 import PaymentMethods from "../components/cart/paymentMethods";
 import ProductsSwipper from '../components/productsSwipper';
 import { women_swiper } from '../data/home';
+import {useSession} from "next-auth/react"
+import {useRouter} from "next/router"
 
 export default function Cart() {
+  const Router = useRouter();
+  const {data: session} = useSession();
   const [selected, setSelected] = useState([]);
   const {cart} = useSelector((state) => ({...state}));
   const dispach = useDispatch();
@@ -25,6 +29,14 @@ export default function Cart() {
     setTotal((parseFloat(selected.reduce((a,c)=> a + c.price*c.qty, 0) + shippingFee).toFixed(2)));
   },[selected, shippingFee]);
   //------
+  const saveCartToDbHandler = async () => {
+    if(session) {
+      const res = saveCart(selected, session.user.id);
+      Router.push("/checkout");
+    } else {
+      signIn()
+    }
+  };
     return (
     <>
         <Header/>
@@ -53,6 +65,7 @@ export default function Cart() {
               shippingFee={shippingFee} 
               total={total} 
               selected={selected}
+              saveCartToDbHandler={saveCartToDbHandler}
               />
               <PaymentMethods/>
             </div> 
