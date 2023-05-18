@@ -47,6 +47,16 @@ const cartSchema = new mongoose.Schema(
     }
 );
 
-const Cart = mongoose.models.Cart || mongoose.model("Cart", cartSchema);
+// const Cart = mongoose.models.Cart || mongoose.model("Cart", cartSchema);
+
+// export default Cart;
+
+let Cart;
+
+try {
+  Cart = mongoose.model('Cart');
+} catch {
+  Cart = mongoose.model('Cart', cartSchema);
+}
 
 export default Cart;

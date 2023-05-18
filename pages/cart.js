@@ -10,8 +10,9 @@ import { useEffect } from "react";
 import PaymentMethods from "../components/cart/paymentMethods";
 import ProductsSwipper from '../components/productsSwipper';
 import { women_swiper } from '../data/home';
-import {useSession} from "next-auth/react"
-import {useRouter} from "next/router"
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
+import { saveCart } from "../request/user";
 
 export default function Cart() {
   const Router = useRouter();
