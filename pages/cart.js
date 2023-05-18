@@ -12,10 +12,16 @@ export default function Cart() {
   const [selected, setSelected] = useState([]);
   const {cart} = useSelector((state) => ({...state}));
   const dispach = useDispatch();
+  //------
+  const [shippingFee, setShippinFee] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [total, setTotal] = useState(0);
   useEffect(()=>{
-    //dispach
-  },[]);
-  console.log("Selected->",selected);
+    setShippinFee(selected.reduce((a,c)=> a + c.shipping, 0).toFixed(2));
+    setSubtotal(selected.reduce((a,c)=> a + c.price*c.qty, 0).toFixed(2));
+    setTotal((parseFloat(selected.reduce((a,c)=> a + c.price*c.qty, 0) + shippingFee).toFixed(2)));
+  },[selected, shippingFee]);
+  //------
     return (
     <>
         <Header/>
@@ -40,10 +46,10 @@ export default function Cart() {
                 }
               </div>
               <Checkout 
-              subtotal="5458" 
-              shippingFee="0" 
-              total="5458" 
-              selected={[]}/>
+              subtotal={subtotal} 
+              shippingFee={shippingFee} 
+              total={total} 
+              selected={selected}/>
             </div> 
             ): ( 
                 <Empty/>
