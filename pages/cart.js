@@ -4,6 +4,7 @@ import Header from "../components/cart/header/index";
 import styles from "../styles/cart.module.scss"
 import Product from "../components/cart/product";
 import CartHeader from "../components/cart/cartHeader";
+import Checkout from "../components/cart/checkout";
 
 export default function Cart() {
   const {cart} = useSelector((state) => ({...state}));
@@ -21,6 +22,11 @@ export default function Cart() {
                   ))
                 }
               </div>
+              <Checkout 
+              subtotal="5458" 
+              shippingFee="0" 
+              total="5458" 
+              selected={[]}/>
             </div> 
             ): ( 
                 <Empty/>
