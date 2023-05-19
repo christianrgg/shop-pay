@@ -9,13 +9,13 @@ handler.post(async(req,res)=>{
         db.connectDB();
         const promises = req.body.products.map(async(p)=>{
             let dbProduct = await Product.findById(p._id).lean();
-            let originalPrice = dbProduct.subProducts[p.style].sizes.find(
+            let originalPrice = dbProduct.subProducts[p.style]?.sizes.find(
                 (x)=>x.size == p.size
-                ).price;
-            let quantity = dbProduct.subProducts[p.style].sizes.find(
+                )?.price;
+            let quantity = dbProduct.subProducts[p.style]?.sizes.find(
                 (x)=>x.size == p.size
-                ).qty;
-            let discount = dbProduct.subProducts[p.style].discount;
+                )?.qty;
+            let discount = dbProduct.subProducts[p.style]?.discount;
             return {
                 ...p,
                 priceBefore: originalPrice,

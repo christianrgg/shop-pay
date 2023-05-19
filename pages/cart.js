@@ -26,17 +26,17 @@ export default function Cart() {
   const [shippingFee, setShippinFee] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
-  // useEffect(()=>{
-  //   const update = async () => {
-  //     const {data} = await axios.post("/api/updateCart", {
-  //       products: cart.cartItems,
-  //     });
-  //     dispach(updateCart(data));
-  //   }
-  //   if(cart.cartItems.length>0){
-  //     update();
-  //   }
-  // },[cart.cartItems, dispach]);
+  useEffect(()=>{
+    const update = async () => {
+      const {data} = await axios.post("/api/updateCart", {
+        products: cart.cartItems,
+      });
+      dispach(updateCart(data));
+    }
+    if(cart.cartItems.length>0){
+      update();
+    }
+  },[cart.cartItems, dispach]);
   useEffect(()=>{
     setShippinFee(selected.reduce((a,c)=> a + c.shipping, 0).toFixed(2));
     setSubtotal(selected.reduce((a,c)=> a + c.price*c.qty, 0).toFixed(2));
