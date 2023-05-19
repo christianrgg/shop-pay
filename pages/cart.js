@@ -3,6 +3,7 @@ import Empty from "../components/cart/empty";
 import Header from "../components/cart/header/index";
 import styles from "../styles/cart.module.scss"
 import Product from "../components/cart/product";
+import { updateCart } from "../store/cartSlice";
 import CartHeader from "../components/cart/cartHeader";
 import Checkout from "../components/cart/checkout";
 import { useState } from "react";
@@ -13,6 +14,7 @@ import { women_swiper } from '../data/home';
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import { saveCart } from "../request/user";
+import axios from "axios";
 
 export default function Cart() {
   const Router = useRouter();
@@ -24,6 +26,17 @@ export default function Cart() {
   const [shippingFee, setShippinFee] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+  // useEffect(()=>{
+  //   const update = async () => {
+  //     const {data} = await axios.post("/api/updateCart", {
+  //       products: cart.cartItems,
+  //     });
+  //     dispach(updateCart(data));
+  //   }
+  //   if(cart.cartItems.length>0){
+  //     update();
+  //   }
+  // },[cart.cartItems, dispach]);
   useEffect(()=>{
     setShippinFee(selected.reduce((a,c)=> a + c.shipping, 0).toFixed(2));
     setSubtotal(selected.reduce((a,c)=> a + c.price*c.qty, 0).toFixed(2));
