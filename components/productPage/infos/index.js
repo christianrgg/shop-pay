@@ -25,10 +25,10 @@ export default function Infos({product, setActiveImg}) {
         setQty(1);
     }, [router.query.style]);
     useEffect(()=>{
-        if(qty>product.quantity){
-            setQty(product.quantity);
+        if(qty>product?.quantity){
+            setQty(product?.quantity);
         }
-    },[qty, product.quantity]);
+    },[qty, product?.quantity]);
     
     const addToCartHandler = async () => {
         if(!router.query.size){
@@ -71,25 +71,25 @@ export default function Infos({product, setActiveImg}) {
     return (
     <div className={styles.infos}>
         <div className={styles.infos__container}>
-            <h1 className={styles.infos__name}>{product.name}</h1>
-            <h1 className={styles.infos__sku}>{product.sku}</h1>
+            <h1 className={styles.infos__name}>{product && product.name}</h1>
+            <h2 className={styles.infos__sku}>{product && product.sku}</h2>
             <div className={styles.infos__rating}>
                 <Rating
                 name="half-rating-read" 
-                defaultValue={product.rating} 
+                defaultValue={product?.rating} 
                 precision={0.5} 
                 // readOnly
                 styles={{color:"#FACF19"}}
                 />
-                ({product.numReviews}
-                {product.numReviews == 1 ? " review" : " reviews"})
+                ({product?.numReviews}
+                {product?.numReviews == 1 ? " review" : " reviews"})
             </div>
             <div className={styles.infos__price}>
                 {
-                    !size ? ( <h2>{product.priceRange}</h2> ): ( <h1>{product.price}</h1>)
+                    !size ? ( <h2>{product?.priceRange}</h2> ): ( <h1>{product?.price}</h1>)
                 }
                 {
-                    product.discount>0 ? (<h3>
+                    product?.discount>0 ? (<h3>
                         {size && <span>{product.priceBefore}$</span>}
                         <span>(- {product.discount}%)</span>
                         </h3>)
@@ -99,19 +99,20 @@ export default function Infos({product, setActiveImg}) {
                 }
             </div>
             <span className={styles.infos__shipping}>
-                    {product.shipping ? `+${product.shipping}$ Shipping fee` : "Free Shipping"}
+                    {product?.shipping ? `+${product.shipping}$ Shipping fee` : "Free Shipping"}
             </span>
             <span>
                 {size
-                    ? product.quantity
-                    : product.sizes.reduce((start, next)=>start+next.qty,0)
+                    ? product?.quantity
+                    : (product?.sizes || []).reduce((start, next) => start + (next.qty || 0), 0)
+                    // : product.sizes.reduce((start, next)=>start+next.qty,0)
                 }
                 {""} pieces available.
             </span>
             <div className={styles.infos__sizes}>
                 <h4>Select a Size:</h4>
                 <div className={styles.infos__sizes_wrap}>
-                    {product.sizes.map((size,i)=>(
+                    {product?.sizes?.map((size,i)=>(
                         <Link key= {i} href={`/product/${product.slug}?style=${router.query.style}&size=${i}`}
                         >
                             <div className={`${styles.infos__sizes_size} ${i==router.query.size && styles.active_size}`}
@@ -125,7 +126,7 @@ export default function Infos({product, setActiveImg}) {
             </div>
             <div className={styles.infos__colors}>
                 {
-                    product.colors && product.colors.map((color,i)=>(
+                    product?.colors && product.colors.map((color,i)=>(
                         <span
                         key={i}
                         className={i==router.query.style ? styles.active_color : ""}
@@ -156,8 +157,8 @@ export default function Infos({product, setActiveImg}) {
             </div>
             <div className={styles.infos__actions}>
                 <button
-                disabled={product.quantity<1}
-                style={{cursor:`${product.quantity< 1 ? "not-allowed" : ""}`}}
+                disabled={product?.quantity<1}
+                style={{cursor:`${product?.quantity< 1 ? "not-allowed" : ""}`}}
                 onClick={()=> addToCartHandler()}
                 >
                     <BsHandbagFill/>
@@ -172,7 +173,8 @@ export default function Infos({product, setActiveImg}) {
                 error && <span className={styles.error}>{error}</span>
             }
             <Share/>
-            <Accordian details ={[product.description, ...product.details]}/>
+            <Accordian details={[product?.description, ...(product?.details || [])]} />
+            {/* <Accordian details ={[product?.description, ...product?.details]}/> */}
             <SimilarSwiper/>
         </div>
     </div>

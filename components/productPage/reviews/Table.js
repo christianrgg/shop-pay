@@ -9,7 +9,7 @@ import TableHeader from "./TableHeader";
 export default function Table({ reviews, allSizes, colors }) {
   const [page, setPage] = useState(1);
   const PER_PAGE = 3;
-  const count = Math.ceil(reviews.length / PER_PAGE);
+  const count = Math.ceil(reviews?.length / PER_PAGE);
   const _DATA = usePagination(reviews, PER_PAGE);
   const handleChange = (e, p) => {
     setPage(p);
@@ -19,8 +19,10 @@ export default function Table({ reviews, allSizes, colors }) {
     <div className={styles.table}>
     <TableHeader
       reviews={reviews}
-      allSizes={[{ size: "All" }, ...allSizes]}
-      colors={[{ color: "", image: "" }, ...colors]}
+      allSizes={allSizes ? [{ size: "All" }, ...allSizes] : []}
+      // allSizes={[{ size: "All" }, ...allSizes]}
+      colors={colors ? [{ color: "", image: ""}, ...colors] : []}
+      // colors={[{ color: "", image: "" }, ...colors]}
     />
     <div className={styles.table__data}>
       {_DATA.currentData().map((review, i) => (
